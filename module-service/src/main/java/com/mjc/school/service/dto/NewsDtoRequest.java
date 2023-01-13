@@ -6,4 +6,4 @@ public record NewsDtoRequest(
         String title,
         String content,
         Long authorId
-){ }git
+){ }
