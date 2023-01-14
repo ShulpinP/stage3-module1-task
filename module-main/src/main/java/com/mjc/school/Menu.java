@@ -1,5 +1,5 @@
 package com.mjc.school;
-import com.mjc.school.controller.Controller;
+import com.mjc.school.controller.implementation.NewsController;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.exceptions.ValidatorException;
 import com.mjc.school.service.exceptions.ServiceErrorCode;
@@ -7,7 +7,6 @@ import com.mjc.school.service.exceptions.ServiceErrorCode;
 import static com.mjc.school.Action.*;
 
 
-import javax.swing.*;
 import java.util.Scanner;
 
 public class Menu {
@@ -26,18 +25,18 @@ public class Menu {
             System.out.println(action.getActionWithNumber());
         }
     }
-    public void getNews(Controller controller) {
+    public void getNews(NewsController newsController) {
         System.out.println(GET_ALL_NEWS.getAction());
-        controller.readAll().forEach(System.out::println);
+        newsController.readAll().forEach(System.out::println);
     }
 
-    public void getNewsById(Controller controller, Scanner input) {
+    public void getNewsById(NewsController newsController, Scanner input) {
         System.out.println(GET_NEWS_BY_ID.getAction());
         System.out.println(NEWS_ID_ENTER);
-        System.out.println(controller.readById(getKeyboardNumber(NEWS_ID, input)));
+        System.out.println(newsController.readById(getKeyboardNumber(NEWS_ID, input)));
     }
 
-    public void createNews(Controller controller, Scanner input) {
+    public void createNews(NewsController newsController, Scanner input) {
         NewsDtoRequest dtoRequest = null;
         boolean isValid = false;
         while (!isValid) {
@@ -55,10 +54,10 @@ public class Menu {
                 System.out.println(ex.getMessage());
             }
         }
-        System.out.println(controller.create(dtoRequest));
+        System.out.println(newsController.create(dtoRequest));
     }
 
-    public void updateNews(Controller newsController, Scanner keyboard) {
+    public void updateNews(NewsController newsController, Scanner keyboard) {
         NewsDtoRequest dtoRequest = null;
         boolean isValid = false;
         while (!isValid) {
@@ -81,7 +80,7 @@ public class Menu {
         System.out.println(newsController.update(dtoRequest));
     }
 
-    public void deleteNews(Controller newsController, Scanner keyboard) {
+    public void deleteNews(NewsController newsController, Scanner keyboard) {
         System.out.println(REMOVE_NEWS_BY_ID.getAction());
         System.out.println(NEWS_ID_ENTER);
         System.out.println(newsController.deleteById(getKeyboardNumber(NEWS_ID, keyboard)));
